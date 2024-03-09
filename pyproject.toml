@@ -1,0 +1,71 @@
+[tool.poetry]
+name = "sos"
+version = "0.1.0"
+description = ""
+authors = ["Adão Santos adaosantosn@outlook.com"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "4.2.8"
+validate-docbr = "^1.10.0"
+django-stdimage = "^6.0.2"
+djangorestframework = "^3.14.0"
+psycopg2-binary = "^2.9.9"
+gunicorn = "^21.2.0"
+
+
+[tool.poetry.group.dev.dependencies]
+mkdocs = "^1.5.3"
+flake8 = "^7.0.0"
+isort = "^5.13.2"
+black = "^24.2.0"
+pytest = "^8.0.2"
+model-bakery = "^1.17.0"
+coverage = "^7.4.3"
+pytest-django = "^4.8.0"
+faker = "^24.0.0"
+[tool.flake8]
+max-line-length = 120
+exclude = [
+    # No need to traverse our git directory
+    ".git",
+    # There's no value in checking cache directories
+    "__pycache__"
+]
+extend-ignore = ["E203"]
+
+[tool.black]
+line-length = 88
+
+[tool.coverage.run]
+omit = ['*/init.py',
+        '*/settings.py',
+        '*/manager.py',
+        '*/wsgi.py',
+        '*/asgi.py',
+        '*/apps.py',
+        '*/urls.py',
+        '*/migrations/*',
+        '*/tests/*'
+]
+
+[tool.coverage.paths]
+source = ['.']
+[tool.coverage.report]
+exclude_also = [
+    'raise Vitima.DoesNotExist()',
+    'def create_superuser',
+    'def create_user',
+    'def _create_user',
+    'def clean_cpf'
+]
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "sos.settings"
+addopts = "-p no:warnings"
+python_files = ["test_*.py", "*_test.py", "tests/"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
