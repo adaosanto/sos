@@ -1,0 +1,26 @@
+/*
+[title] {
+  display: block;
+  margin: 0 0 1em 0;
+}
+*/
+/*
+  hiding, and styling, the elements we'll be creating
+*/
+[title] + span.createdTooltip {
+  display: none;
+  border: 1px solid #37632A;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 0.2em 0.5em;
+  border-radius: 2px;
+  z-index: 99;
+}
+
+/*
+  showing the created elements on hovering the element we want to
+  show tooltips for
+*/
+[title]:hover + span.createdTooltip {
+  position: fixed;
+  display: block;
+}

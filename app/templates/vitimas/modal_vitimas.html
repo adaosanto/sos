@@ -1,0 +1,91 @@
+
+{% load static %}               
+
+<script src="{% static 'base/js/jquery.blockUI.js' %}" type="text/javascript"></script>
+<div class="documents">
+    <div class="col-xs-12 col-md-12">
+        <h2 class="nomargin-top">Informações da Vítima</h2>
+        <script src="{% static 'base/classes/tablesorter/jquery.tablesorter.js' %}"></script>
+        <div style="width:100%;margin-bottom: 0px;  overflow: auto; " id="tab_area" class="table table-bordered hidden-print">
+        <table class="table table-condensed table-hover table-bordered table-responsive table-striped tablesorterPager" width="100%" style="border: 1px solid #d0d0d0; margin-bottom: 0px; background-color: #fff;" id="tab">
+            <tbody>
+                <tr>
+                    <td><b>ID</b></td>
+                    <td>{{ object.id }}</td>
+                </tr>
+
+                <tr>
+                    <td><b>NOME DA VÍTIMA</b></td>
+                    <td>{{ object.nome }}</td>
+                </tr>
+
+                <tr>
+                    <td><b>DATA DE NASCIMENTO</b></td>
+                    <td>{{ object.data_nascimento|date:"d/m/Y" }}</td>
+                </tr>
+
+
+                <tr>
+                    <td><b>RG</b></td>
+                    <td>{{ object.rg }}</td>
+                </tr>
+
+                <tr>
+                    <td><b>CPF</b></td>
+                    <td>{{ object.cpf }}</td>
+                </tr>
+
+                <tr>
+                    <td><b>ENDEREÇO</b></td>
+                    <td>{{ object.endereco }}</td>
+                </tr>
+
+                <tr>
+                    <td><b>TELEFONE</b></td>
+                    <td>{{ object.telefone }}</td>
+                </tr>
+
+                <tr>
+                    <td><b>NOME DO SUSPEITO</b></td>
+                    <td>{{ object.suspeito }}</td>
+                </tr>
+
+                <tr>
+                    <td><b>CHAVE DE ACESSO</b></td>
+                    <td>{{ object.chave_acesso }}</td>
+                </tr>
+
+
+                <tr>
+                    <td><b>ATIVO</b></td>
+                    <td>{% if object.is_active %}Sim{% else %}Não{% endif %}</td>
+                </tr>
+
+                <tr>
+                    <td><b>OBSERVAÇÃO</b></td>
+                    <td>{{ object.observacao }}</td>
+                </tr>
+
+                <tr>
+                    <td><b>Fotos</b></td>
+                    <td colspan="2" style="display: flex; justify-content: space-between;">
+                        <div style="flex: 1; text-align: center;">
+                            <h3>Foto da vítima</h3>
+                            <img src='{{ object.foto_vitima.thumb.url }}' style='width:60%;height:auto;'>
+                        </div>
+                        <div style="flex: 1; text-align: center;">
+                            <h3>Foto do suspeito</h3>
+                            <img src='{{ object.foto_suspeito.thumb.url }}' style='width:60%;height:auto;'>
+                        </div>
+                    </td>
+                </tr>
+        
+        
+            </tbody>
+        </table>
+        <script>
+            $("#tab").tablesorter({widthFixed: true, widgets: ['zebra']}); 
+        </script>
+        </div>
+    </div>
+</div>

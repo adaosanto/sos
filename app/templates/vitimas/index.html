@@ -1,0 +1,99 @@
+{% extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+<div class="content-wrapper" style="min-height: 900px;">
+   {% if messages %}
+   {% for message in messages %}
+   <div class="alert alert-{{message.tags}} fade in" style="margin: 15px;" role="alert" class="messages">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Fechar</span></button>
+      {{ message }}
+   </div>
+   <br>
+   {% endfor %}
+   {% endif %}
+   <script type="text/javascript">
+      window.setTimeout(function() {
+         $("#messages").fadeTo(10000, 0).slideUp(900, function(){
+            $(this).remove(); 
+         });
+      }, 2000);
+   </script>
+   <section class="content-header">
+      <h1>
+         Vitimas		
+      </h1>
+      <ol class="breadcrumb">
+         <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+         <li class="active">Vitimas</li>
+      </ol>
+   </section>
+   <section class="content" style="overflow-y:auto; height:80vh;">
+      <div id="div_content">
+         <div style="width: 100%; height: 50vh;">
+            <div class="box box-primary">
+               <div class="box-body">
+                  <div class="toolbar2 col-xs-5" style="padding-left: 0px;">
+                     <a href="{% url 'vitimas-new' %}"><button class="btn btn-flat btn-sm btn-success" name="new" id="new">
+                     <i class="fa fa-plus" aria-hidden="true"></i> Novo
+                     </button>&nbsp;</a>
+                     <input name="idActTable" id="idActTable" maxlength="11" readonly="" type="hidden">
+                  </div>
+                  <div id="tableDiv" poptitle="clique para selecionar!" class="wel1">
+                     <div id="tabela_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                        <div class="dt-buttons"><a class="dt-button buttons-copy buttons-html5 btn btn-flat btn-success btn-sm" tabindex="0" aria-controls="tabela" href="#"><span><u>C</u>opiar</span></a><a class="dt-button buttons-csv buttons-html5 btn btn-flat btn-success btn-sm" tabindex="0" aria-controls="tabela" href="#"><span>CSV</span></a><a class="dt-button buttons-excel buttons-html5 btn btn-flat btn-success btn-sm" tabindex="0" aria-controls="tabela" href="#"><span>Excel</span></a><a class="dt-button buttons-pdf buttons-html5 btn btn-flat btn-success btn-sm" tabindex="0" aria-controls="tabela" href="#"><span>PDF</span></a><a class="dt-button buttons-print btn btn-flat btn-success btn-sm" tabindex="0" aria-controls="tabela" href="#"><span><u>I</u>mprimir</span></a><a class="dt-button buttons-collection buttons-colvis btn btn-flat btn-success btn-sm" tabindex="0" aria-controls="tabela" href="#"><span>Coluna Visivel</span></a><a class="dt-button buttons-collection buttons-page-length btn-danger btn btn-flat btn-success btn-sm" tabindex="0" aria-controls="tabela" href="#"><span>Registros</span></a></div>
+                        <div id="tabela_filter" class="dataTables_filter col-xs-2"><label>Pesquisar<input type="search" class="form-control input-sm" placeholder="" aria-controls="tabela"></label></div>
+                        <div id="tabela_processing" class="dataTables_processing panel panel-default" style="display: none;">Processando...</div>
+                     </div>
+                  </div>
+                  <script type="text/javascript" src="{% static 'base/js/jquery-2.2.4.js' %}"></script>
+                  <link href="{% static 'base/js/contextMenu/jquery.contextMenu.min.css' %}" rel="stylesheet">
+                  <script src="{% static 'base/js/contextMenu/jquery.contextMenu.min.js' %}"></script>
+                  <script src="{% static 'base/js/contextMenu/jquery.ui.position.min.js' %}"></script>
+                  <link rel="stylesheet" type="text/css" href="{% static 'base/classes/datatables/css/dataTables.bootstrap.css' %}">
+                  <link rel="stylesheet" type="text/css" href="{% static 'base/classes/datatables/css/buttons.dataTables.css' %}">
+                  <script type="text/javascript" src="{% static 'base/classes/datatables/js/jquery.dataTables.min.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/dataTables.bootstrap.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/dataTables.buttons.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/buttons.html5.min.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/dataTables.select.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/pdfmake.min.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/vfs_fonts.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/buttons.print.min.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/jszip.min.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/buttons.flash.min.js' %}"></script><script type="text/javascript" src="{% static 'base/classes/datatables/js/buttons.colVis.min.js' %}"></script><script>
+                     $( document ).ready( function( $ ) {
+                          console.log($(".paginate_button"))
+                         createDataTableJS("{% url 'vitimas'  %}", "tabela", '1');
+                     });
+                     window.setTimeout(function(){
+                     $(".dataTables_info").addClass(" col-sm-8");
+                     $(".dataTables_filter").addClass(" col-xs-2");
+                     $(".dt-button").addClass(" btn btn-flat btn-success btn-sm");
+                     }, 1500);
+                     
+                     $(function(){
+                         $.contextMenu({
+                             selector: ".selected", 
+                             trigger: "left",
+                             autoHide: false,
+                             reposition: true, 
+                             items: $.contextMenu.fromMenu($('#html5menu')),
+                             position: function(opt, x, y){
+                                 opt.$menu.css({top: (y - 1), left: (x - 1)});
+                             }
+                                     
+                         });
+                     });
+                  </script>
+                  <menu id="html5menu" style="display:none" type="context">
+                     <a href="{% url 'vitimas-new' %}">Novo</a>
+                     <a onclick="modalView()">Visualizar</a>
+                     <command label="Editar" onclick="actionPage();">
+                     </command>
+                  </menu>
+               </div>
+               <script>
+                  function modalView(){
+                        sysModalBoxJs('Visualização',true,'VitimasDetalhesView', 'modal-lg', 'default', 'null', '/detail?');
+                     }
+
+            </script>
+            </div>
+         </div>
+      </div>
+   </section>
+   <div id="online_content"></div>
+   <div id="online_content2"></div>
+</div>
+{% endblock %}

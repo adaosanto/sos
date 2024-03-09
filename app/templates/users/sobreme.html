@@ -1,0 +1,97 @@
+
+{% extends 'home/base.html' %}
+{% load static %}
+
+{% block header %}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        Perfil
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'index' %}"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Perfil</li>
+      </ol>
+    </section>
+
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper" style="min-height: 950px;">
+   {% if messages %}
+   {% for message in messages %}
+   <div class="alert alert-{{message.tags}} fade in" style="margin: 15px;" role="alert" id="message">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Fechar</span></button>
+         {{ message }}
+
+      </div>
+      <br>
+      {% endfor %}
+   {% endif %}
+   <script type="text/javascript">
+      window.setTimeout(function() {
+         $("#message").fadeTo(10000, 0).slideUp(900, function(){
+            $(this).remove(); 
+         });
+      }, 2000);
+</script>
+   <section class="content-header">
+      <h1>
+         Perfil				
+      </h1>
+      <ol class="breadcrumb">
+         <li><a href="{%  url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+         <li class="active">Sessao</li>
+      </ol>
+   </section>
+   <section class="content" style="overflow-y:auto; height:80vh;">
+      <div id="div_content">
+         <div style="width: 100%; height: 50vh;">
+            <div class="col-md-3">
+               <div class="box box-default">
+                  <div class="box-body box-profile">
+                     <img class="profile-user-img img-responsive img-circle" style="height: 100px;" src="{{ request.user.foto.thumb.url }}" alt="User profile picture">
+                     <h3 class="profile-username text-center">{{ request.user.nome.title }}</h3>
+                     <p class="text-muted text-center">Geotecnologia</p>
+                     <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                           <b>Login</b> <a class="pull-right">{{ request.user.email }}</a>
+                        </li>
+                        <li class="list-group-item">
+                           <b>Senha</b> <a class="pull-right">**********</a>
+                        </li>
+                        <li class="list-group-item">
+                           <b>Perfil</b> <a class="pull-right">Geotecnologia</a>
+                        </li>
+                     </ul>
+                     <a href="{% url 'change_me' %}" class="btn btn-default btn-block"><b><i class="fa fa-pencil"></i> Editar</b></a>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-9">
+               <div class="box box-default">
+                  <div class="box-header with-border">
+                     <h3 class="box-title">Dados da Sessão Atual</h3>
+                  </div>
+                  <div class="box-body">
+                     <strong><i class="fa fa-key margin-r-5"></i> Sessão </strong>
+                     <p class="text-muted">{{ request.session.session_key }}</p>
+                     <hr style="margin-top: 10px;margin-bottom: 10px;">
+                     <strong><i class="fa fa-globe margin-r-5"></i> Expira em</strong>
+                     <p class="text-muted">{{ expire_in|date:"d/m/Y H:i" }}</p>
+                     <hr style="margin-top: 10px;margin-bottom: 10px;">
+                     <strong><i class="fa fa-laptop margin-r-5"></i> IP Remoto</strong>
+                     <p class="text-muted">{{ client_ip }}</p>
+                     <hr style="margin-top: 10px;margin-bottom: 10px;">
+                     <strong><i class="fa fa-power-off margin-r-5"></i> Situação</strong>
+                     <p class="text-muted">Ativa</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+</div>
+{% endblock %}

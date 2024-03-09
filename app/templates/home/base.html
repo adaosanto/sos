@@ -1,0 +1,267 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+      <meta http-equiv="X-UA-Compatible" content="IE=7; IE=9; IE=Edge"/>
+      <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+      <title>Mapa do Pânico | Painel Administrativo</title>
+
+      <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon_gestao2021.ico' %}">
+      <link href="{% static 'base/css/geral.css' %}" rel="stylesheet">
+      <script src="{% static 'base/lib/jquery/jquery.min.js' %}" type="text/javascript"></script>
+      <script src="{% static 'base/js/jquery.blockUI.js' %}" type="text/javascript"></script>
+      <script src="{% static 'base/lib/fancybox-master/dist/jquery.fancybox.min.js' %}"></script>
+      <script src="{% static 'base/lib/jquery/jquery-ui.min.js' %}" type="text/javascript"></script>
+      <link href="{% static 'base/lib/fancybox-master/dist/jquery.fancybox.min.css' %}" rel="stylesheet">
+      <link href="{% static 'base/lib/jquery/jquery-ui.min.css' %}" rel="stylesheet" type="text/css" media="screen" />
+
+      <script src="{% static 'base/lib/bootstrap/js/bootstrap-plugins.js' %}" type="text/javascript"></script>
+      <script src="{% static 'base/lib/bootstrap/js/locales/bootstrap-datepicker.pt.js' %}" type="text/javascript"></script>
+      <script src="{% static 'base/lib/adianti/adianti.js' %}" type="text/javascript"></script>
+      <link href="{% static 'base/css/essentials.css' %}" rel="stylesheet"/>
+      <link href="{% static 'base/css/animate.css' %}" rel="stylesheet"/>
+      <script src="{% static 'base/lib/adianti/components.min.js' %}" type="text/javascript"></script>
+      <script src="{% static 'base/lib/bootstrap/js/bootstrap.js' %}" type="text/javascript"></script>
+      <link href="{% static 'base/lib/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" media="screen" />
+      <link href="{% static 'base/lib/bootstrap/css/boostrap-plugins.min.css' %}" rel="stylesheet" type="text/css" media="screen" />
+      <link href="{% static 'base/lib/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css" media="screen" />
+      <link href="{% static 'base/lib/adianti/adianti.css' %}" rel="stylesheet" type="text/css" media="screen" />
+      <script src="{% static 'base/lib/bootstrap/js/bootstrap.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'base/lib/theme3/css/AdminLTE.min.css' %}">
+      <!--<link rel="stylesheet" href="{% static 'base/lib/theme3/css/skins/skin-blue-light.min.css">-->
+      <link rel="stylesheet" href="{% static 'base/lib/theme3/css/skins/skin-verde-lrv.css' %}">
+      <link href="{% static 'base/css/icofont.css' %}" rel="stylesheet">
+
+      <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+      <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+      <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+      
+      <script language="javascript">
+         function excluir() {
+         	if(confirm("Tem certeza que deseja excluir?")) return true;
+         	else return false;
+         }
+         
+         
+         /*jQuery(function($){
+         	   $("#cpf").mask("999.999.999-99");
+         	   $("#cnpj").mask("99.999.999/9999-99");
+         	   $("#nascimento").mask("99/99/9999");
+         	   $("#telefone").mask("(99) 999999999");
+         	   $("#telefone2").mask("(99) 999999999");
+         	   $("#movel").mask("(99) 999999999");
+         	   $("#celular").mask("(99) 999999999");
+         	   $("#celular2").mask("(99) 999999999");
+         	   $("#cpf").mask("999.999.999-99");
+         	   $("#cnpj").mask("99.999.999/9999-99");
+         });*/
+         
+         var SPMaskBehavior = function (val) {
+         	return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+         },
+         spOptions = {
+             onKeyPress: function(val, e, field, options) {
+                 field.mask(SPMaskBehavior.apply({}, arguments), options);
+               },
+           	placeholder: "(__) _________"
+         };
+         
+         $(document).ready(function(){
+         	$("#cpf").mask("000.000.000-00");
+         	$("#cnpj").mask("00.000.000/0000-00");
+         	$("#nascimento").mask("00/00/0000");
+         	$("#telefone").mask(SPMaskBehavior, spOptions);
+         	$("#telefone2").mask(SPMaskBehavior, spOptions);
+         	$("#movel").mask(SPMaskBehavior, spOptions);
+         	$("#celular").mask(SPMaskBehavior, spOptions);
+         	$("#celular2").mask(SPMaskBehavior, spOptions);
+         });
+         
+         
+         function pesquisa(){
+         	F1.target="";
+         	document.F1.submit();	
+         	document.F1.SearchText.value=""
+         }
+      </script>
+      <script src="{% static 'base/lib/jquery/jquery.mask.js' %}"></script>
+      <script src="{% static 'base/js/jquery-ui.js' %}"></script>
+      <script type='text/javascript'>
+         $(document).ready(function() {
+         	$('.sidebar-toggle').click(function(event) {
+         		if ($(".sidebar-mini").hasClass("sidebar-collapse")) {
+         			$.cookie('menuClose', 'false', 'null');
+         		}else{
+         			$.cookie('menuClose', 'true', 'null');
+         		}	
+         	});
+         
+         	if ($.cookie("menuClose") == 'true') {
+         		$('.sidebar-mini').addClass('sidebar-collapse');
+         	}
+         });
+      </script>
+   </head>
+   <!--<body class="hold-transition skin-blue-light sidebar-mini fixed  ">-->
+   <body id="teste" class="hold-transition skin-verde-lrv sidebar-mini fixed  ">
+      <div class="loader"></div>
+      <div class="wrapper">
+         <header class="main-header">
+            <a href="{% url 'home' %}" class="logo">
+            <span class="logo-mini"><b>MP</b></span>
+            <span class="logo-lg"><b>Mapa do Pânico</b></span>
+            </a>
+            <nav class="navbar navbar-static-top" role="navigation">
+               <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+               <span class="sr-only">Toggle navigation</span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               <span class="icon-bar"></span>
+               </a>
+               <div class="navbar-custom-menu">
+                  <ul class="nav navbar-nav">
+                     <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <img src="{{ request.user.foto.thumb.url }}" class="user-image" alt="User Image">
+                        <span class="hidden-xs">{{ request.user.nome }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                           <li class="user-header" style="height:initial">
+                              <img src="{{ request.user.foto.thumb.url }}" class="img-circle" alt="User Image">
+                              <p>
+                                 {{ request.user.nome }}					                  <small>Mapa do Pânico</small>
+                              </p>
+                           </li>
+                           <li class="user-footer">
+                              <div class="pull-left">
+                                 <a href="{% url 'aboutme' %}" class="btn btn-default btn-flat">Meu Perfil</a>
+                              </div>
+                              <div class="pull-right">
+                                 <form method="post" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-default btn-flat">Sair</button>
+                                </form>
+                              </div>
+                           </li>
+                        </ul>
+                     </li>
+                  </ul>
+               </div>
+            </nav>
+         </header>
+         <aside class="main-sidebar">
+            <section class="sidebar ">
+               <div class="user-panel">
+                  <div class="pull-left image">
+                     <img src="{{ request.user.foto.thumb.url }}" class="img-circle img-circle-mini" alt="User Image">
+                     <img src="{{ request.user.foto.thumb.url }}" class="img-circle img-circle-lg" alt="User Image">
+                  </div>
+                  <div class="pull-left info">
+                     <p>{{ request.user.nome.title }}</p>
+                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                  </div>
+               </div>
+               <script src="{% static 'base/js/filter.js' %}"></script>
+               <form id="frm-filtro" onKeyDown="if(event.keyCode == '13'){ return false }" autocomplete="off" class="sidebar-form" style="border: 1px solid #d2d6de;">
+                  <div class="input-group">
+                     <input type="text" name="pesquisar" id="pesquisar" class="form-control" placeholder="Buscar..." style="padding: 6px 12px;">
+                     <span class="input-group-btn">
+                     <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                     </span>
+                  </div>
+               </form>
+               <ul class="sidebar-menu" id="side-menu">
+                  <li class="header"><a style="display:none"></a>MENU</li>
+                  
+                  <li class="treeview">
+                     <a href="#" class=""> <i class="fa fa-cog"></i> <span>System</span></a>
+                     <ul class="treeview-menu level-2" style="display: none;">
+                        <li><a href="{% url 'aboutme' %}" ><i class="fa fa-user-circle-o" aria-hidden="true"></i> Meu Perfil</a></li>
+                     </ul>
+                  </li>
+
+                  {% if request.user.is_staff %}
+                 <li class="treeview">
+                     <a href="" class=""> <i class="fa fa-map"></i> <span>Mapa de Calor</span></a>
+                  </li>
+
+                  <li class="treeview">
+                     <a href="#" class=""> 
+                     <i class="fa  fa-play" aria-hidden="true"></i> 
+                     <span>
+                     Cadastros										</span>
+                     <span class="pull-right"><i class="fa fa-caret-down"></i></span>
+                     </a>
+                     <ul class="treeview-menu level-2" style="display: none ;">
+                        <li>
+                           <a href="{% url 'users' %}">
+                           <i class="fa-solid fa-users-gear" aria-hidden="true"></i>
+                           <span>Usuários</span>
+                           </a>
+                        </li>
+                        <li>
+                           <a href="{% url 'vitimas' %}">
+                           <i class="fa-solid fa-people-roof" aria-hidden="true"></i>
+                           <span>Vitimas</span>
+                           </a>
+                        </li>
+                     </ul>
+                  </li>
+                  {% endif %}
+                  <li class="treeview">
+                     <a href="{% url 'ocorrencias' %}" class=""> <i class="fa fa-history"></i> <span>Ocorrências</span></a>
+                  </li>
+                  
+               </ul>
+            </section>
+         </aside>
+         {% block content %}
+         {% endblock %}
+         <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+               <b>Versão:</b> 5.1.7 
+            </div>
+            <strong>Gestão de Conteúdo</strong>
+            <small>
+               | <span class="glyphicon glyphicon-user"></span> <a href="{% url 'aboutme' %}">{{ request.user.nome.title }}</a> 
+               | <span class="glyphicon glyphicon-time"></span> {% now "d/m/Y G:i:s" %} <!-- |
+                  <span id="log"></span>-->
+            </small>
+         </footer>
+      </div>
+      <script src="{% static 'base/js/actionPage.js' %}"></script>
+      <script src="{% static 'base/js/moment.js' %}"></script>
+      <script src="{% static 'base/js/bootstrap-datetimepicker.min.js' %}"></script>
+      <link href="{% static 'base/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet" >
+      <link rel="stylesheet" href="{% static 'base/classes/lobibox/css/lobibox.css' %}"/>
+      <script src="{% static 'base/classes/lobibox/js/lobibox.js' %}"></script>
+      <div class="control-sidebar-bg"></div>
+      <div id="divModalBox"></div>
+      <!-- Bootstrap 3.3.6 -->
+      <script src="{% static 'base/lib/bootstrap/js/bootstrap.js' %}"></script>
+      <!-- FastClick -->
+      <script src="{% static 'base/js/fastclick.js' %}"></script>
+      <!-- AdminLTE App -->
+      <script src="{% static 'base/js/app.min.js' %}"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script type="text/javascript" src="{% static 'base/lib/jquery-cookie-1.4.0/jquery.cookie.min.js' %}"></script>
+      <script src="{% static 'base/js/demo.js' %}"></script>	
+      <script src="{% static 'base/lib/theme3/js/jquery.slimscroll.min.js' %}"></script>
+      <script src="{% static 'base/js/instantTooltips.js' %}"></script>
+      <link rel="stylesheet" href="{% static 'base/css/instantTooltips.css' %}">
+      <script src="{% static 'base/js/jquery.mask.js' %}"></script>
+      <script type='text/javascript' src="{% static 'base/lib/maskMoney/jquery.maskMoney.js' %}"></script>
+      <script type="text/javascript">
+         jQuery(window).load(function () {
+         	$(".loader").fadeOut("slow");
+         	$(".loader1").fadeOut("slow");
+         	$('#tabela').tooltip('disable');
+         });
+         
+      </script>
+   </body>
+</html>

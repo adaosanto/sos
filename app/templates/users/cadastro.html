@@ -1,0 +1,104 @@
+
+{% extends 'home/base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+<div class="content-wrapper" style="min-height: 950px;">
+   
+   <section class="content-header">
+      <h1>
+         Usuários			
+      </h1>
+      <ol class="breadcrumb">
+         <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+         <li class="active">Cadastro</li>
+      </ol>
+   </section>
+   <section class="content" style="overflow-y:auto; height:80vh;">
+      <div id="div_content">
+         <div style="width: 100%; height: 50vh;">
+            <div class="box box-default">
+               <div class="box-body">
+                  <script src="{% static 'base/js/select2.full.js' %}"></script>
+                  <link href="{% static 'base/css/select2.css' %}" rel="stylesheet">
+                  <form id="form2" name="form2" method="post" enctype="multipart/form-data" onsubmit="validar()">
+                     {% csrf_token %}
+                     <div class="box-header with-border" style="margin-bottom: 10px;">
+                        <h3 class="box-title">Cadastro</h3>
+                     </div>
+                     <div class="form-group col-md-1 col-xs-12 col-sm-6 " id="area_id"><label for="id">ID: </label>
+                        <input readonly="" id="id" name="id" type="text" autocomplete="off" class="form-control">
+                     </div>
+                     <div class="row">
+                     </div>
+
+                     <div class="form-group col-md-4 col-xs-12 col-sm-6 " id="area_nome"><label for="nome">Nome Completo: <span style="color: #E75428;" title="">*</span><span class="createdTooltip"></span></label>
+                        {{ form.nome }}
+                     </div>
+                     <div class="form-group col-md-2 col-xs-12 col-sm-6 " id="area_cpf"><label for="cpf">CPF: <span style="color: #E75428;" title="">*</span><span class="createdTooltip"></span></label>
+                        {{ form.cpf }}
+                     </div>
+                     <div class="form-group col-md-4 col-xs-12 col-sm-6 " id="area_email"><label for="email">Email: <span style="color: #E75428;" title="">*</span><span class="createdTooltip"></span></label>
+                        {{ form.email }}
+                     </div>
+                     <div class="form-group col-md-2 col-xs-12 col-sm-6 " id="area_telefone"><label for="telefone">Telefone: <span style="color: #E75428;" title="">*</span><span class="createdTooltip"></span></label>
+                        {{ form.telefone }}
+                     </div>
+                     <div class="form-group col-md-4 col-xs-12 col-sm-6 " id="area_password"><label for="password">Senha: <span style="color: #E75428;" title="">*</span><span class="createdTooltip"></span></label>
+                        {{ form.password }}
+                     </div>
+           
+                     <div class="form-group  col-md-2  col-xs-12 col-sm-6 " id="area_genero">
+                        <label>Gênero: </label><span style="color: red;" title=""> <b>*</b></span><span class="createdTooltip"></span>
+                        {{ form.genero }}
+                     </div>
+
+                     <div class="form-group  col-md-2  col-xs-12 col-sm-6 " id="area_is_staff">
+                        <label>Administrador: </label><span style="color: red;" title=""> <b>*</b></span><span class="createdTooltip"></span>
+                        {{ form.groups }}
+                     </div>
+
+                     <div class="file-field form-group col-md-3 col-xs-12 col-sm-6" id="area_foto">
+                        <label style="font-size: 90% !important; "><b>Foto</b></label>
+                        <input type="file" id="foto" name="foto" class="form-control" accept="1">
+                     </div>
+            
+                     <div class="col-xs-12" style="margin-top:15px"><a class="btn btn-flat btn-sm btn-info" href="{% url 'users' %}">
+                        <span class="fa fa-arrow-left"></span> Voltar
+                        </a>&nbsp;<button class="btn btn-flat btn-sm btn-success" type="submit">
+                        <span class="fa fa-save"></span> Salvar
+                        </button>
+                     </div>
+
+                     
+                  </form>
+                  <script>
+                     $(function () {
+                     	$('.datetimepicker').datetimepicker();
+                     });
+                  </script>
+                  <script>
+                     $(function () {
+                     $(".selectDin").select2();
+                     });	
+                     setTimeout(function(){$(".selectDin").select2();}, 1200);
+                  </script>
+                  <script>
+                     $('#form2').submit(function(e){
+                     	$('button[type=submit]', this).attr('disabled', 'disabled');
+                     	$.blockUI({
+                     		message: "<h3 style='margin-top:10px;'><img src='./images/spinner.gif' /> Aguarde...</h3>",
+                     	});
+                     });
+                  </script>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <div id="online_content"></div>
+   <div id="online_content2"></div>
+</div>
+{% endblock %}

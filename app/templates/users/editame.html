@@ -1,0 +1,105 @@
+
+{% extends 'home/base.html' %}
+{% load static %}
+
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'base/css/instantTooltips.css' %}">
+<div class="content-wrapper" style="min-height: 950px;">
+   <section class="content-header">
+      <h1>
+         Perfil				
+      </h1>
+      <ol class="breadcrumb">
+         <li><a href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a></li>
+         <li class="active">Sessao_cur</li>
+      </ol>
+   </section>
+   <section class="content" style="overflow-y:auto; height:80vh;">
+      <div id="div_content">
+         <div style="width: 100%; height: 50vh;">
+            <div class="box box-default">
+               <div class="box-body">
+                  <script src="{% static 'base/js/select2.full.js' %}"></script>
+                  <link href="{% static 'base/css/select2.css' %}" rel="stylesheet">
+                  <form id="form2" name="form2" action="{% url 'change_me' %}" method="post" enctype="multipart/form-data">
+                     {% csrf_token %}
+
+                     <div class="box-header with-border" style="margin-bottom: 10px;">
+                        <i class="fa fa-pencil"></i> 
+                        <h3 class="box-title">Você esta atualizando seu perfil</h3>
+                     </div>
+                     <div class="col-md-12">
+                        <p><b>Login:</b> <a href="#">{{ request.user.email }}</a></p>
+                        <p> <b>Senha:</b> <a href="#">**********</a></p>
+                        <p> <b>Perfil:</b> <a href="#">Geotecnologia</a></p>
+                        <hr>
+                     </div>
+                     <div class="col-md-12">    
+                        <cite title=""><i class="fa fa-info-circle"></i> Você pode atualizar somente o que desejar!!</cite>
+                        <br>
+                        <br>
+                     </div>
+                     <div class="form-group col-md-2 col-xs-12 col-sm-6 " id="area_password"> <label for="password">Nova Senha: </label>
+                        {{ form.password }}
+                     </div>
+                     <div class="form-group  col-md-2  col-xs-12 col-sm-6 " id="area_genero">
+                        <label>Gênero: </label><span style="color: red;" title="" data-original-title=""> <b>*</b></span>
+                        {{ form.genero }}
+                     </div>
+                     <div class="file-field form-group col-md-3 col-xs-12 col-sm-6 " id="area_foto">
+                        <label style="font-size: 90% !important; "><b>Foto</b></label>
+                        {{ form.foto }}
+                     </div>
+                     
+                     <script src="{% static 'base/js/jquery.complexify.js' %}"></script>
+                     <script type="text/javascript">
+                        $("#form2").submit(function(e){
+                        	$('button[type=submit]', this).attr('disabled', 'disabled');
+                        	$.blockUI({
+                        		message: "<h3 style='margin-top:10px;'><img src='{% static 'images/spinner.gif' %}' /> Aguarde...</h3>",
+                        	});
+                        });			
+                        
+                        $(document).ready(function () {
+                        	$('input').keypress(function (e) {
+                        	var code = null;
+                        	code = (e.keyCode ? e.keyCode : e.which);
+                        	return (code == 13) ? false : true;
+                        	});
+                        });
+                        
+                         $(function () {
+                        	$("#password").complexify({}, function (valid, complexity) {
+                        		document.getElementById("mtSenha").value = complexity;
+                              $("#progress").css("width", complexity+"%").attr("aria-valuenow",complexity);
+                        	});
+                          });
+                     </script>
+                     <div class="col-xs-12" style="margin-top:15px"><a class="btn btn-flat btn-sm btn-info" href="{% url 'aboutme' %}">
+                        <span class="fa fa-arrow-left"></span> Voltar
+                        </a>&nbsp;<button class="btn btn-flat btn-sm btn-success" type="submit">
+                        <span class="fa fa-save"></span> Salvar
+                        </button>
+                     </div>
+                  </form>
+                  <script>
+                     $(function () {
+                     	$('.datetimepicker').datetimepicker();
+                     });
+                  </script>
+                  <script>
+                     $(function () {
+                     $(".selectDin").select2();
+                     });	
+                     setTimeout(function(){$(".selectDin").select2();}, 1200);
+                  </script>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+   <div id="online_content"></div>
+   <div id="online_content2"></div>
+</div>
+{% endblock %}
