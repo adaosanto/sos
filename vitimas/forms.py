@@ -36,7 +36,11 @@ class VitimaChangeForm(VitimaCreateForm):
         self.fields["suspeito"].required = False
         self.fields["cpf"].required = False
         self.fields["data_nascimento"].required = False
-        self.fields["status_flag"].required = False
+        self.fields["password"].required = False
+        
+        
+        self.fields["is_active"].required = False
+        
 
     class Meta:
         model = Vitima
@@ -53,8 +57,6 @@ class VitimaChangeForm(VitimaCreateForm):
         instance = getattr(self, "instance", None)
         if instance:
             return getattr(instance, field_name)
-        else:
-            return self.cleaned_data.get(field_name, None)
 
     def clean_nome(self):
         return self.clean_field("nome")
@@ -69,4 +71,7 @@ class VitimaChangeForm(VitimaCreateForm):
         return self.clean_field("rg")
 
     def clean_data_nascimento(self):
+        return self.clean_field("data_nascimento")
+
+    def clean_data_password(self):
         return self.clean_field("data_nascimento")

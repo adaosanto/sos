@@ -4,13 +4,13 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, TemplateView, UpdateView
 
-from app.views import LoginRequiredMixin
+from app.views import LoginRequiredMixin, OnlyAdminPermissionMixin
 
 from .forms import VitimaChangeForm, VitimaCreateForm
 from .models import Vitima
 
 
-class ListVitimasView(LoginRequiredMixin, TemplateView):
+class ListVitimasView(OnlyAdminPermissionMixin, LoginRequiredMixin, TemplateView):
     template_name = "vitimas/index.html"
 
     def get(self, request, *args, **kwargs):
@@ -36,13 +36,13 @@ class ListVitimasView(LoginRequiredMixin, TemplateView):
                     "recordsTotal": len(data),
                     "columns": list(fields_mapping.keys()),
                     "data": data,
-                }
+                },
             )
 
         return super().get(request, *args, **kwargs)
 
 
-class CreateVitimaView(LoginRequiredMixin, CreateView):
+class CreateVitimaView(OnlyAdminPermissionMixin, LoginRequiredMixin, CreateView):
     template_name = "vitimas/cadastro.html"
     form_class = VitimaCreateForm
     success_url = reverse_lazy("vitimas")
@@ -57,7 +57,7 @@ class CreateVitimaView(LoginRequiredMixin, CreateView):
         return redirect("vitimas")
 
 
-class ChangeVitimaView(LoginRequiredMixin, UpdateView):
+class ChangeVitimaView(OnlyAdminPermissionMixin, LoginRequiredMixin, UpdateView):
     model = Vitima
     form_class = VitimaChangeForm
     template_name = "vitimas/editar.html"
@@ -68,12 +68,13 @@ class ChangeVitimaView(LoginRequiredMixin, UpdateView):
         return super().form_valid(form)
 
     def form_invalid(self, form):
-        for error in form.errors:
-            messages.error(self.request, error)
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"Erro no campo '{field}': {error}")
         return redirect("vitimas")
 
 
-class DetailVitimaView(LoginRequiredMixin, DetailView):
+class DetailVitimaView(OnlyAdminPermissionMixin, LoginRequiredMixin, DetailView):
     """
     Exibe os detalhes de uma vítima específica.
     """

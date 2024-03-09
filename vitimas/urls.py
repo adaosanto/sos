@@ -6,5 +6,5 @@ urlpatterns = [
     path("new/", CreateVitimaView.as_view(), name="vitimas-new"),
     path("", ListVitimasView.as_view(), name="vitimas"),
     path("<int:pk>/", ChangeVitimaView.as_view(), name="vitimas-edit"),
-    path("<int:pk>/detail", DetailVitimaView.as_view(), name="vitima-detail"),
+    path("<int:pk>/detail/", DetailVitimaView.as_view(), name="vitima-detail"),
 ]
